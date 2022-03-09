@@ -101,7 +101,6 @@
                     "type": "sourcecontrols",
                     "apiVersion": "2021-03-01",
                     "name": "web",
-                    "location": "[parameters('location')]",
                     "dependsOn": [
                         "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
                     ],
