@@ -1,0 +1,118 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "hostingPlanName": {
+            "type": "string",
+            "metadata": {
+                "description": "Hostingplan Name"
+            }
+        },
+        "sku": {
+            "type": "string",
+            "metadata": {
+                "description": "The SKU of App Service Plan."
+            }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "siteName": {
+            "type": "String",
+            "metadata": {
+                "description": "Web App Name"
+            }
+        },
+        "repoUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "GitHub repo to deploy to App Service"
+            }
+        },
+        "branch": {
+            "type": "String",
+            "metadata": {
+                "description": "GitHub repo branch to deploy to App Service"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2021-03-01",
+            "name": "[parameters('hostingPlanName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('sku')]"
+            },
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2021-03-01",
+            "name": "[parameters('siteName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
+            ],
+            "properties": {
+                "name": "[parameters('siteName')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+                "siteConfig": {
+                    "localMySqlEnabled": true,
+                    "appSettings": [
+                        {
+                            "name": "WEBSITE_MYSQL_ENABLED",
+                            "value": "1"
+                        },
+                        {
+                            "name": "WEBSITE_MYSQL_GENERAL_LOG",
+                            "value": "0"
+                        },
+                        {
+                            "name": "WEBSITE_MYSQL_SLOW_QUERY_LOG",
+                            "value": "0"
+                        },
+                        {
+                            "name": "WEBSITE_MYSQL_ARGUMENTS",
+                            "value": "--max_allowed_packet=16M"
+                        }
+                    ]
+                }
+            },
+            "resources": [
+                {
+                    "type": "sourcecontrols",
+                    "apiVersion": "2021-03-01",
+                    "name": "web",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
+                    ],
+                    "properties": {
+                        "repoUrl": "[parameters('repoUrl')]",
+                        "branch": "[parameters('branch')]",
+                        "isManualIntegration": true
+                    }
+                },
+                {
+                    "type": "config",
+                    "apiVersion": "2021-03-01",
+                    "name": "web",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
+                    ],
+                    "properties": {
+                        "phpVersion": "7.4"
+                    }
+                }
+            ]
+        }
+    ],
+    "outputs": {}
+}
