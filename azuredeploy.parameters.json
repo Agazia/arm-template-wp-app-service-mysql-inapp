@@ -1,24 +1,24 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "hostingPlanName":{
-            "value": "[newGuid()]"
-        },
-        "sku": {
-            "value": "F1"
-        },
-        "location": {
-            "value": "[resourceGroup().location]"
-        },
-        "siteName":{
-            "value": "[newGuid()]"
-        },
-        "repoUrl": {
-            "value": "https://github.com/Agazia/wp"
-        },
-        "branch": {
-            "value": "master"
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "hostingPlanName": {
+      "value": "[newGuid()]"
+    },
+    "sku": {
+      "value": "F1"
+    },
+    "location": {
+      "value": "[resourceGroup().location]"
+    },
+    "siteName": {
+      "value": "[newGuid()]"
+    },
+    "repoUrl": {
+      "value": "https://github.com/Agazia/wp"
+    },
+    "branch": {
+      "value": "master"
     }
+  }
 }
