@@ -37,14 +37,14 @@
         },
         "repoUrl": {
             "type": "string",
-            "defaultValue": "https://github.com/azureappserviceoss/wordpress-azure",
+            "defaultValue": "https://github.com/Agazia/wp",
             "metadata": {
                 "description": "GitHub repo to deploy to App Service"
             }
         },
         "branch": {
             "type": "string",
-            "defaultValue": "master",
+            "defaultValue": "main",
             "metadata": {
                 "description": "GitHub repo branch to deploy to App Service"
             }
