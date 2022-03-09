@@ -61,25 +61,6 @@
         "html": "https://github.com/Azure-Samples/html-docs-hello-world"
       },
       "gitRepoUrl": "[if(bool(parameters('helloWorld')), variables('gitRepoReference')[toLower(parameters('language'))], parameters('repoUrl'))]",
-      "configReference": {
-        ".net": {
-          "comments": ".Net app. No additional configuration needed."
-        },
-        "html": {
-          "comments": "HTML app. No additional configuration needed."
-        },
-        "php": {
-          "phpVersion": "7.4"
-        },
-        "node": {
-          "appSettings": [
-            {
-              "name": "WEBSITE_NODE_DEFAULT_VERSION",
-              "value": "12.15.0"
-            }
-          ]
-        }
-      }
     },
     "resources": [
       {
@@ -89,7 +70,8 @@
         "location": "[parameters('location')]",
         "sku": {
           "name": "[parameters('sku')]"
-        }
+        },
+        "properties": {}
       },
       {
         "type": "Microsoft.Web/sites",
@@ -100,7 +82,28 @@
           "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]"
         ],
         "properties": {
-          "siteConfig": "[variables('configReference')[parameters('language')]]",
+          "siteConfig": {
+                    "localMySqlEnabled": true,
+                    "phpVersion": "7.4",
+                    "appSettings": [
+                        {
+                            "name": "WEBSITE_MYSQL_ENABLED",
+                            "value": "1"
+                        },
+                        {
+                            "name": "WEBSITE_MYSQL_GENERAL_LOG",
+                            "value": "0"
+                        },
+                        {
+                            "name": "WEBSITE_MYSQL_SLOW_QUERY_LOG",
+                            "value": "0"
+                        },
+                        {
+                            "name": "WEBSITE_MYSQL_ARGUMENTS",
+                            "value": "--max_allowed_packet=16M"
+                        }
+                    ]
+                },
           "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]"
         },
         "resources": [
