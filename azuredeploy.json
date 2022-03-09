@@ -37,7 +37,7 @@
         },
         "repoUrl": {
             "type": "string",
-            "defaultValue": "https://github.com/Agazia/wp",
+            "defaultValue": "https://github.com/azureappserviceoss/wordpress-azure",
             "metadata": {
                 "description": "GitHub repo to deploy to App Service"
             }
