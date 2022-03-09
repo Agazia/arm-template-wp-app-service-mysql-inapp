@@ -4,36 +4,47 @@
     "parameters": {
         "hostingPlanName": {
             "type": "string",
+            "defaultValue": "[newGuid()]",
             "metadata": {
                 "description": "Hostingplan Name"
             }
         },
         "sku": {
             "type": "string",
+            "defaultValue": "F1",
             "metadata": {
                 "description": "The SKU of App Service Plan."
-            }
+            },
+            "allowedValues": [
+                "F1",
+                "B1",
+                "S1"
+            ]
         },
         "location": {
             "type": "string",
+            "defaultValue": "[resourceGroup().location]",
             "metadata": {
                 "description": "Location for all resources."
             }
         },
         "siteName": {
-            "type": "String",
+            "type": "string",
+            "defaultValue": "[newGuid()]",
             "metadata": {
                 "description": "Web App Name"
             }
         },
         "repoUrl": {
             "type": "string",
+            "defaultValue": "https://github.com/Agazia/wp",
             "metadata": {
                 "description": "GitHub repo to deploy to App Service"
             }
         },
         "branch": {
-            "type": "String",
+            "type": "string",
+            "defaultValue": "master",
             "metadata": {
                 "description": "GitHub repo branch to deploy to App Service"
             }
