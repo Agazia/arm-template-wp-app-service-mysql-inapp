@@ -74,6 +74,12 @@
             "properties": {
                 "name": "[parameters('siteName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+                "metadata": [
+                    {
+                        "name": "CURRENT_STACK",
+                        "value": "php"
+                    }
+                ],
                 "siteConfig": {
                     "localMySqlEnabled": true,
                     "appSettings": [
@@ -108,17 +114,6 @@
                         "repoUrl": "[parameters('repoUrl')]",
                         "branch": "[parameters('branch')]",
                         "isManualIntegration": true
-                    }
-                },
-                {
-                    "type": "config",
-                    "apiVersion": "2021-03-01",
-                    "name": "web",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
-                    ],
-                    "properties": {
-                        "phpVersion": "7.4"
                     }
                 }
             ]
